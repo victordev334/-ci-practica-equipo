@@ -1,14 +1,24 @@
+
 name: Python CI
+
 on:
-    push:
+  push:
+
 jobs:
-    test:
-           runs-on: ubuntu-latest
-           steps:
-         - uses: actions/checkout@v4
-         - name: Instalar Python
-          uses: actions/setup-python@v5
- - name: Instalar pytest
-   run: pip install pytest
- - name: Ejecutar pruebas
-   run: pytest
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Instalar pytest
+        run: pip install pytest
+
+      - name: Ejecutar pruebas
+        run: pytest
