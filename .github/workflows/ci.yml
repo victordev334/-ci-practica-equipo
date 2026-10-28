@@ -25,3 +25,6 @@ jobs:
         run: |
           mkdir artefactos
           cp calculadora.py artefactos/
+      - name: Generar ZIP
+        run: |
+          zip -r artefacto.zip artefactos
