@@ -1,24 +1,27 @@
-
-name: Python CI
+name: CI Pipeline
 
 on:
   push:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
-      - name: Instalar pytest
-        run: pip install pytest
+      - name: Instalar dependencias
+        run: |
+          pip install pytest
 
       - name: Ejecutar pruebas
-        run: pytest
+        run: |
+          pytest
+
+      - name: Build proyecto
+        run: |
+          mkdir artefactos
+          cp calculadora.py artefactos/
