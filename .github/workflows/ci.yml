@@ -15,11 +15,30 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          pip install pytest
+          pip install pytest pytest-cov
 
       - name: Ejecutar pruebas
         run: |
-          pytest
+          pytest -v --cov=calculadora --cov-report=term-missing --cov-report=xml --junitxml=resultados-pruebas.xml
+
+      - name: Resumen de métricas
+        if: always()
+        run: |
+          {
+            echo "## Métricas de pruebas"
+            echo '```'
+            python -m coverage report
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Subir reportes de pruebas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes-pruebas
+          path: |
+            resultados-pruebas.xml
+            coverage.xml
 
       - name: Build proyecto
         run: |
